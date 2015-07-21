@@ -7,7 +7,7 @@ import com.pluto.service.iface.HelloService;
 /**
  * Created by Jay on 2015/7/17.
  */
-@Service("helloServiceImpl")
+@Service("helloService")
 public class HelloServiceImpl implements HelloService {
 
     public String hello(String str) {
