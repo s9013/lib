@@ -1,7 +1,9 @@
 package com.pluto.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pluto.dao.HelloRepository;
 import com.pluto.service.iface.HelloService;
 
 /**
@@ -10,8 +12,12 @@ import com.pluto.service.iface.HelloService;
 @Service("helloService")
 public class HelloServiceImpl implements HelloService {
 
+	@Autowired
+	private HelloRepository helloRepository;
+	
     public String hello(String str) {
-        return "Hello " + str + ", I am spring!";
+    	helloRepository.save(str);
+        return "This is service :" + str ;
     }
 
 }
