@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 2 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 3 <configuration>
+ 4     <environments default="development">
+ 5         <environment id="development">
+ 6             <transactionManager type="JDBC" />
+ 7             <!-- 配置数据库连接信息 -->
+ 8             <dataSource type="POOLED">
+ 9                 <property name="driver" value="com.mysql.jdbc.Driver" />
+10                 <property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
+11                 <property name="username" value="root" />
+12                 <property name="password" value="XDP" />
+13             </dataSource>
+14         </environment>
+15     </environments>
+16     
+17 </configuration>
