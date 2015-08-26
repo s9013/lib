@@ -1,15 +1,9 @@
-# URL
-## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://s9013.github.io/hexoblog
-root: /hexoblog/
-permalink: :year/:month/:day/:title/
-permalink_defaults:
-
 
 # Header
 menu:
   Home: /hexoblog
   Archives: /hexoblog/archives
+  About: /hexoblog/about
 rss: /atom.xml
 
 # Content
