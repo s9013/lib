@@ -1,0 +1,9 @@
+<hibernate-mapping package="com.hibernate.entity">
+
+    <class name="User" table="User">
+        <id name="id" column="user_id"/>
+        <property name="name"/>
+        <property name="birthday"/>
+    </class>
+
+</hibernate-mapping>
