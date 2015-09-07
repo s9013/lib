@@ -14,6 +14,19 @@ hibernate
 	使用JDBC是手动去转换
 
 
+1.hibernate.cfg.xml 配置文件
+  数据库驱动、url、用户名、密码、方言、显示sql、格式化sql、建表策略
+2.实体类 映射配置 domainName.hbm.xml
+  id 生成策略
+3.hibernateUtil 
+  Configuration 获取sessiongFactory 获取session 
+4.CURD
+  开启事务
+
+
+
+
+
 使用Maven构将 pom.xml文件
 ~~~XML
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -60,7 +73,8 @@ hibernate
 ----------
 
 
-hibernate配置文件 hibernate.cfg.xml src/main/resources 路径下
+##hibernate配置文件 hibernate.cfg.xml src/main/resources 路径下##
+
 ~~~xml
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
@@ -108,7 +122,7 @@ hibernate配置文件 hibernate.cfg.xml src/main/resources 路径下
 ----------
 
 
-User.java
+##User.java
 ~~~java
 package com.hibernate.entity;
 
@@ -151,7 +165,7 @@ public class User {
 
 ----------
 
-User映射配置文件 src/main/resources/com.hibernate.entity 路径下
+##User映射配置文件 src/main/resources/com.hibernate.entity 路径下
 ~~~xml
 <hibernate-mapping package="com.hibernate.entity">
 
@@ -166,7 +180,7 @@ User映射配置文件 src/main/resources/com.hibernate.entity 路径下
 
 ----------
 
-测试
+##测试
 ~~~java
 package com.hibernate;
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	hello date
+	<div>test</div>
+</body>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script>
+	$("div").click(function() {
+		console.log('123');
+		var helloVo = {
+			date : new Date(),
+			str:'jay'
+		}
+		$.ajax({
+			type : 'POST',
+			contentType : "application/json",
+			dataType : 'JSON',
+			url : "api/helloDate",
+			data : JSON.stringify(helloVo),
+			success : function(data) {
+				console.log(data);
+				console.log(new Date(data.date));
+			}
+		})
+	})
+</script>
+
+</html>

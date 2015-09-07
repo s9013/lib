@@ -1,31 +1,34 @@
 package com.hibernate.util;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 /**
  * @author Jay
  * @time 2015年8月28日
  */
-public class HibernateUtil {
-	
-	private static final SessionFactory sessionFactory = buildSessionFactory();
+public final class HibernateUtil {
 
-	private static SessionFactory buildSessionFactory() {
-		try {
-			// Create the SessionFactory from hibernate.cfg.xml
-			return new Configuration().configure().buildSessionFactory(
-					new StandardServiceRegistryBuilder().build());
-		} catch (Throwable ex) {
-			// Make sure you log the exception, as it might be swallowed
-			System.err.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
+	private static final SessionFactory sessionFactory;
+
+	private HibernateUtil() {
 	}
 
-	public static SessionFactory getSessionFactory() {
+	static {
+		Configuration conf = new Configuration();
+		// 加载主配置 如果名字不是hibernate.cfg.xml 则要写文件名
+		conf.configure("hibernate.cfg.xml");
+		// 获取SessionFactory
+		sessionFactory = conf.buildSessionFactory();
+	}
+
+	public static SessionFactory getSessionfactory() {
 		return sessionFactory;
 	}
 	
+	public static Session getSession(){
+		return sessionFactory.openSession();
+	}
+
 }
