@@ -225,5 +225,273 @@ public class UserTest {
 
 ----------
 
+
+
+##一对多
+创建两张表 班级表  学生表
+~~~sql
+--班级表
+create table grade
+(
+	gid int primary key,
+	gname varchar(20) not null,
+	gdesc varchar(50)
+);
+--学生表
+create table student
+(
+	sid int primary key,
+	sname varchar(20) not null,
+	sex char(2),
+	gid int
+);
+--外键
+alter table student add constraint fk_student_gid foreign key(gid) references grade(gid);
+~~~
+
+entity
+~~~java
+package com.hibernate.entity;
+
+import java.io.Serializable;
+import java.util.Set;
+
+/**
+ * @author Jay
+ * @time 2015年9月8日
+ */
+public class Grade implements Serializable {
+
+	private static final long serialVersionUID = -2845032978967274285L;
+
+	private int gid;
+	private String gname;
+	private String gdesc;
+
+	private Set<Student> students;
+	
+	
+	public Grade() {
+		super();
+	}
+
+	public Grade(int gid, String gname, String gdesc) {
+		super();
+		this.gid = gid;
+		this.gname = gname;
+		this.gdesc = gdesc;
+	}
+
+	public int getGid() {
+		return gid;
+	}
+
+	public void setGid(int gid) {
+		this.gid = gid;
+	}
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+
+	public String getGdesc() {
+		return gdesc;
+	}
+
+	public void setGdesc(String gdesc) {
+		this.gdesc = gdesc;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
+
+}
+
+~~~
+
+~~~java
+package com.hibernate.entity;
+
+import java.io.Serializable;
+
+/**
+ * @author Jay
+ * @time 2015年9月8日
+ */
+public class Student implements Serializable {
+
+	private static final long serialVersionUID = -2005812841024253872L;
+
+	private int sid;
+	private String sname;
+	private String sex;
+
+	public int getSid() {
+		return sid;
+	}
+
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+	public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public Student() {
+		super();
+	}
+
+	public Student(int sid, String sname, String sex) {
+		super();
+		this.sid = sid;
+		this.sname = sname;
+		this.sex = sex;
+	}
+
+}
+~~~
+
+##配置文件
+~~~xml
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hibernate.entity">
+
+	<!-- name是类名 table是表名 -->
+	<class name="Grade" table="grade">
+
+		<!-- name是类的地段 column是表里的字段 -->
+		<id name="gid" column="gid">
+			<!-- 主键生成策略 -->
+			<generator class="native" />
+		</id>
+
+		<property name="gname" />
+		<property name="gdesc" />
+
+		<!-- 一对多 -->
+		<set name="students" table="student">
+			<key column="gid" />
+			<one-to-many class="com.hibernate.entity.Student" />
+		</set>
+	</class>
+
+</hibernate-mapping>
+~~~
+
+~~~xml
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hibernate.entity">
+
+	<!-- name是类名 table是表名 -->
+    <class name="Student" table="student">
+    	
+    	<!-- name是类的地段 column是表里的字段 -->
+        <id name="sid" column="sid">
+        	<!-- 主键生成策略 -->
+        	<generator class="native"/>
+        </id>
+        
+        <property name="sname"/>
+        <property name="sex"/>
+        <!-- 一对多  -->
+        <!-- <many-to-one name="gid" foreign-key="gid"/> -->
+    </class>
+
+</hibernate-mapping>
+~~~
+
+##测试
+~~~java
+package com.hibernate;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.Test;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hibernate.entity.Grade;
+import com.hibernate.util.HibernateUtil;
+
+/**
+ * @author       Jay
+ * @time         2015年9月8日
+ */
+public class More2one {
+
+	
+	private Gson gson = new GsonBuilder().serializeNulls().create();
+	
+	@Test
+	public void test() {
+		Session session = null;
+        try {
+			session = HibernateUtil.getSession();
+			Grade grade =  session.get(Grade.class, 2);
+			System.out.println(gson.toJson(grade));
+		} finally {
+			if(session != null){
+				session.close();
+			}
+		}
+	}
+
+}
+~~~
+		输出结果
+				Hibernate: 
+				    select
+				        grade0_.gid as gid1_0_0_,
+				        grade0_.gname as gname2_0_0_,
+				        grade0_.gdesc as gdesc3_0_0_ 
+				    from
+				        grade grade0_ 
+				    where
+				        grade0_.gid=?
+				Hibernate: 
+				    select
+				        students0_.gid as gid4_1_0_,
+				        students0_.sid as sid1_1_0_,
+				        students0_.sid as sid1_1_1_,
+				        students0_.sname as sname2_1_1_,
+				        students0_.sex as sex3_1_1_ 
+				    from
+				        student students0_ 
+				    where
+				        students0_.gid=?
+				{"gid":2,"gname":"javascript","gdesc":"js强化班","students":[{"sid":3,"sname":"Mike","sex":"男"}]}
+
+
+
 参考：
 	1.http://docs.jboss.org/hibernate/orm/5.0/manual/en-US/html/ch01.html#

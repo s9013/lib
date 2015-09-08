@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hibernate.entity">
+
+	<!-- name是类名 table是表名 -->
+	<class name="Grade" table="grade">
+
+		<!-- name是类的地段 column是表里的字段 -->
+		<id name="gid" column="gid">
+			<!-- 主键生成策略 -->
+			<generator class="native" />
+		</id>
+
+		<property name="gname" />
+		<property name="gdesc" />
+
+		<!-- 一对多 -->
+		<set name="students" table="student">
+			<key column="gid" />
+			<one-to-many class="com.hibernate.entity.Student" />
+		</set>
+	</class>
+
+</hibernate-mapping>

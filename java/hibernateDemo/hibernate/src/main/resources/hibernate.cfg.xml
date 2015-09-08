@@ -35,6 +35,8 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<mapping resource="com/hibernate/entity/User.hbm.xml" />
+		<mapping resource="com/hibernate/entity/Grade.hbm.xml" />
+		<mapping resource="com/hibernate/entity/Student.hbm.xml" />
 
 	</session-factory>
 
