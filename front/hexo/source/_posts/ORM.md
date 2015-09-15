@@ -1,9 +1,12 @@
 title: ORM
 date: 2015-08-26 17:48:51
+tags:
+- Java
 ---
 
 
 Object Relation Mapping 对象/关系映射
+<!--more-->
 
 	ORM的实现:
 	1.hibernate

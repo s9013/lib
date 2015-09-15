@@ -1,8 +1,11 @@
 title: java collection
 date: 2015-08-20 16:57:42
-
+tags:
+- Java
 ---
 
+Java集合
+<!--more-->
 
 ~~~java
 package com.java.collection;

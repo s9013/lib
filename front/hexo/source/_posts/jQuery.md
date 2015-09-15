@@ -4,6 +4,9 @@ tags:
 - jQuery
 ---
 
+jQuery 是一个 JavaScript 库。
+jQuery 极大地简化了 JavaScript 编程。
+<!--more-->
 
 1.ready
 源码

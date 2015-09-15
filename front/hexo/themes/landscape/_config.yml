@@ -1,9 +1,9 @@
 
 # Header
 menu:
-  Home: /hexoblog
-  Archives: /hexoblog/archives
-  About: /hexoblog/about
+  主页: /hexoblog
+  归档: /hexoblog/archives
+  关于: /hexoblog/2000/01/01/about
 rss: /atom.xml
 
 # Content
@@ -20,8 +20,8 @@ widgets:
 - recent_posts
 
 # Miscellaneous
-google_analytics:
-favicon: /favicon.png
+#google_analytics:
+favicon: /hexoblog/img/favicon.ico
 twitter:
 google_plus:
 fb_admins:

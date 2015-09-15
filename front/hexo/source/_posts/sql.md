@@ -1,6 +1,11 @@
 title: sql
 date: 2015-08-20 15:48:11
+tags:
+- sql
 ---
+
+sql学习
+<!--more-->
 
 	--创建表
 	create table t1(
