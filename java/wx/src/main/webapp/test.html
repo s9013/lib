@@ -1,0 +1,33 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+main
+
+<div id="div">click</div>
+
+</body>
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+
+    $("#div").click(function(){
+
+        $.ajax({
+            type : 'POST',
+            contentType : "application/json",
+            dataType : 'JSON',
+            url : "wx/do",
+           // data : JSON.stringify(helloVo),
+            success : function(data) {
+                console.log(data);
+                console.log(new Date(data.date));
+            }
+        })
+
+    });
+
+</script>
+</html>
