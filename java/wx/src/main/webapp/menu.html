@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2015.
+  -->
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>菜单</title>
+</head>
+<body>
+
+</body>
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(function(){
+        $.ajax({
+            type : 'POST',
+            contentType : "application/json",
+            dataType : 'JSON',
+            url : "wx/getMenu",
+            success : function(data) {
+                $('body').append('<div>' + JSON.stringify(data) + '</div>');
+                console.log(data);
+            }
+        })
+    });
+
+</script>
+
+</html>

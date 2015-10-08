@@ -2,14 +2,21 @@ package com.wx.controller;
 
 import com.wx.util.MessageUtil;
 import com.wx.util.TokenThread;
+import com.wx.util.WxUtil;
 import com.wx.vo.AccessToken;
+import com.wx.vo.Oauth2Token;
+import com.wx.vo.UserGroupVo;
+import com.wx.vo.UserVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.wx.util.CheckUtil;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.System;
 import java.util.Map;
 
@@ -80,11 +87,10 @@ public class WxController {
                 message = MessageUtil.initText(toUserName, fromUserName, msg);
             }else if("event".equals(msgType) && map.get("Event").equals("CLICK")){
 
-                msg += "您好！您还没有绑定，请先绑定！ <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ TokenThread.APPID +"&redirect_uri=http://weixin.ngrok.io/weixin/oauth.do&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'>绑定</a>";
-                //msg += "您好！您还没有绑定，请先绑定！ <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dfda79a073efa18&redirect_uri=http%3A%2F%2Fwind%2Engrok%2Eio%2Fwechat%2FoauthServlet&response_type=code&scope=snsapi_base&state=123#wechat_redirect'>绑定</a>";
-                //msg += " <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=http%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'>click base</a>";
-                //msg += " <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=http%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect'>click</a>";
-               // log.info(msg);
+                msg += "hi！ <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ TokenThread.APPID +"&redirect_uri=http://wind.ngrok.io/wx/oauth&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'>click</a>";
+
+                System.out.println(msg);
+
                 message = MessageUtil.initText(toUserName, fromUserName, msg);
 
             }else if("location".equals(msgType)){// 地址
@@ -92,22 +98,50 @@ public class WxController {
                 message = MessageUtil.initText(toUserName, fromUserName, msg);
             }
 
-           // log.info("token: "+TokenThread.accessToken.getAccessToken());
-
-            //out.print(message);
-
-
-
-
         return message;
     }
 
-
-    @RequestMapping(value = "token",method = RequestMethod.GET)
+    /**
+     * 获取token
+     */
+    @RequestMapping(value = "getToken",method = RequestMethod.GET)
     @ResponseBody
     public AccessToken getToken() throws  Exception{
        return TokenThread.accessToken;
     }
 
+    /**
+     * 获取菜单
+     */
+    @RequestMapping(value = "getMenu")
+    @ResponseBody
+    public String getMenu() throws  Exception{
+        return WxUtil.getMenu(TokenThread.accessToken.getAccessToken());
+    }
+
+    /**
+     *  获取用户
+     */
+    @RequestMapping(value = "getUsers")
+    @ResponseBody
+    public UserGroupVo getUsers() throws  Exception{
+        return WxUtil.getUsers(TokenThread.accessToken.getAccessToken());
+    }
+
+    /**
+     * oauth
+     */
+    @RequestMapping(value = "oauth")
+    @ResponseBody
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String code = request.getParameter("code");
+        if (!"authdeny".equals(code)) {
+            Oauth2Token oauth2Token = WxUtil.getOauth2AccessToken(TokenThread.APPID,TokenThread.APPSECRET,code);
+            String openId = oauth2Token.getOpenid();
+            UserVo userInfo = WxUtil.getUser(TokenThread.accessToken.getAccessToken(), openId);
+            request.setAttribute("UserInfo", userInfo);
+        }
+        request.getRequestDispatcher("/userInfo.jsp").forward(request, response);
+    }
 
 }

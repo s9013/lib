@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServlet;
  */
 public class InitServlet extends HttpServlet{
 
-    private static final long serialVersionUID = -6319898826127265611L;
-
     public void init() throws ServletException {
 
         TokenThread.APPID = getInitParameter("APPID");

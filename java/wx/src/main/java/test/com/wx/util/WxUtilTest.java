@@ -39,4 +39,16 @@ public class WxUtilTest {
         WxUtil.getMenu();
     }
 
+
+
+
+    @Test
+    public void testGetUsers() throws Exception {
+       System.out.print( WxUtil.getUsers(WxUtil.getToken().getAccessToken()));
+    }
+
+    @Test
+    public void testGetUser() throws Exception {
+       System.out.print( WxUtil.getUser(WxUtil.getToken().getAccessToken(), "o3DNit24WDaJj5Uc9_BJJFXz2Jec"));
+    }
 } 
