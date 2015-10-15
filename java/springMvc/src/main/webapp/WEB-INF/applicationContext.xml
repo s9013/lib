@@ -50,7 +50,7 @@
             <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
                 <property name="classesToBeBound">
                     <array>
-                        <value>com.wx.vo.AccountBean</value>
+                        <value>AccountBean</value>
                         <value>com.wx.vo.AccessToken</value>
                     </array>
                 </property>

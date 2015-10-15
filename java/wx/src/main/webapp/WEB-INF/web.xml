@@ -24,11 +24,11 @@
         <servlet-class>com.wx.controller.InitServlet</servlet-class>
         <init-param>
             <param-name>APPID</param-name>
-            <param-value>wx8dfda79a073efa18</param-value>
+            <param-value>wxf72b2d5b2c0038d4</param-value>
         </init-param>
         <init-param>
             <param-name>APPSECRET</param-name>
-            <param-value>43b865a6d62dfdec8681ccaf9f804533</param-value>
+            <param-value>a661c50ea12ef2d43476fc4485b66468</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
